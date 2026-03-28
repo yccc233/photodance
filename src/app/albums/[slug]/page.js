@@ -1,6 +1,7 @@
 import { albums } from "@/config/albums";
 import PhotoWall from "@/components/PhotoWall";
 import Link from "next/link";
+import { getPhotosFromFolder } from "@/lib/photos";
 
 export async function generateStaticParams() {
   return albums.map((album) => ({ slug: album.slug }));
@@ -13,11 +14,10 @@ export default async function AlbumPage({ params }) {
     return <div>Album not found</div>;
   }
 
-  // TODO: 后续实现从文件夹读取照片
-  const photos = [];
+  const photos = await getPhotosFromFolder(album.photosFolder);
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-8 max-w-6xl mx-auto">
       <Link href="/" className="text-blue-500 hover:underline mb-8 inline-block">
         ← 返回
       </Link>
