@@ -1,5 +1,6 @@
 import { albums } from "@/config/albums";
 import AlbumCard from "@/components/AlbumCard";
+import ScrollReveal from "@/components/ScrollReveal";
 import { Playfair_Display, Lora } from "next/font/google";
 import "./home.css";
 
@@ -72,14 +73,40 @@ export default function Home() {
       </header>
 
       <main className="home__gallery">
-        <div className="home__gallery-header">
+        <ScrollReveal className="home__gallery-header">
           <span className="home__gallery-label">映像</span>
           <span className="home__gallery-count">{albums.length} Collections</span>
-        </div>
-        <div className="home__grid">
+        </ScrollReveal>
+        <div className="home__timeline">
+          <div className="home__timeline-line" />
           {albums.map((album, index) => (
-            <AlbumCard key={album.slug} album={album} index={index} />
+            <div key={album.slug} className="home__timeline-item">
+              <div className="home__timeline-node">
+                <div className="home__timeline-dot" />
+                <span className="home__timeline-date">{album.date}</span>
+              </div>
+              <ScrollReveal delay={index * 150}>
+                <AlbumCard album={album} index={index} />
+              </ScrollReveal>
+            </div>
           ))}
+          <div className="home__timeline-item home__timeline-future">
+            <div className="home__timeline-node">
+              <div className="home__timeline-dot home__timeline-dot--future" />
+              <span className="home__timeline-date home__timeline-date--future">????.??</span>
+            </div>
+            <ScrollReveal delay={albums.length * 150}>
+              <div className="album-card album-card--future">
+                <div className="album-card__future-content">
+                  <div className="album-card__header">
+                    <span className="album-card__index">Next</span>
+                    <h2 className="album-card__title">未完待续</h2>
+                    <p className="album-card__desc">更多故事，正在路上...</p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </main>
 

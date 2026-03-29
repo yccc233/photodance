@@ -1,4 +1,4 @@
-/* === Album Card Styles === */
+/* === Film Frame Album Card === */
 .album-card-link {
   display: block;
   text-decoration: none;
@@ -8,6 +8,15 @@
 .album-card {
   opacity: 0;
   animation: cardReveal 1s ease-out var(--delay) forwards;
+  background: #faf9f7;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s ease;
+  cursor: pointer;
+}
+
+.album-card:hover {
+  transform: translateY(-6px);
 }
 
 @keyframes cardReveal {
@@ -21,119 +30,208 @@
   }
 }
 
-.album-card__media {
+/* Card Header */
+.album-card__header {
+  padding: 1.5rem 1.5rem 1rem;
   position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 4px;
-  background: #d4d0c8;
 }
 
-.album-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              filter 0.8s ease;
-  filter: grayscale(10%);
-}
-
-.album-card:hover .album-card__image {
-  transform: scale(1.06);
-  filter: grayscale(0%);
-}
-
-.album-card__overlay {
+.album-card__header::after {
+  content: "";
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 1px;
   background: linear-gradient(
-    to top,
-    rgba(10, 10, 10, 0.88) 0%,
-    rgba(10, 10, 10, 0.45) 40%,
-    transparent 65%
+    to right,
+    transparent,
+    rgba(180, 140, 80, 0.4),
+    transparent
   );
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1.25rem 1.25rem 1.5rem;
-  z-index: 2;
 }
 
 .album-card__index {
   font-family: var(--font-lora), Georgia, serif;
   font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  color: rgba(180, 140, 80, 0.7);
-  margin-bottom: 0.6rem;
+  letter-spacing: 0.3em;
+  color: #b48c50;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .album-card__title {
   font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  font-style: italic;
-  color: #faf9f7;
-  margin: 0 0 0.4rem;
-  line-height: 1.2;
+  color: #1a1a1a;
+  margin: 0 0 0.3rem;
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease;
 }
 
-@media (min-width: 768px) {
-  .album-card__overlay {
-    padding: 2rem 2rem 2.5rem;
-  }
-  .album-card__title {
-    font-size: 1.8rem;
-  }
+.album-card:hover .album-card__title {
+  color: #b48c50;
 }
 
 .album-card__desc {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 0.85rem;
-  color: rgba(250, 249, 247, 0.6);
+  font-size: 0.8rem;
+  color: #888;
   margin: 0;
   font-style: italic;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-.album-card:hover .album-card__desc {
-  transform: translateY(0);
-  opacity: 1;
+/* Media Frame */
+.album-card__media {
+  position: relative;
+  margin: 0 1.5rem;
+  background: #1a1a1a;
+  overflow: hidden;
 }
 
-.album-card__meta {
+.album-card__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.album-card__image {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(1.05);
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.album-card:hover .album-card__image {
+  filter: grayscale(0%) contrast(1);
+  transform: scale(1.03);
+}
+
+/* Film Frame Corners */
+.album-card__frame {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.album-card__frame--tl {
+  top: 8px;
+  left: 8px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.album-card__frame--tr {
+  top: 8px;
+  right: 8px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.album-card__frame--bl {
+  bottom: 8px;
+  left: 8px;
+  border-right: none;
+  border-top: none;
+}
+
+.album-card__frame--br {
+  bottom: 8px;
+  right: 8px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Card Footer */
+.album-card__footer {
+  padding: 1rem 1.5rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.2rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(250, 249, 247, 0.1);
-  opacity: 0;
-  transform: translateY(6px);
-  transition: transform 0.5s ease 0.05s, opacity 0.5s ease 0.05s;
-}
-
-.album-card:hover .album-card__meta {
-  transform: translateY(0);
-  opacity: 1;
 }
 
 .album-card__layout {
   font-family: var(--font-lora), Georgia, serif;
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(180, 140, 80, 0.7);
+  color: #aaa;
 }
 
 .album-card__arrow {
-  font-size: 0.9rem;
-  color: rgba(250, 249, 247, 0.3);
-  transition: transform 0.4s ease, color 0.4s ease;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #bbb;
+  transition: all 0.4s ease;
+  background: transparent;
 }
 
 .album-card:hover .album-card__arrow {
+  border-color: #b48c50;
   color: #b48c50;
-  transform: translateX(4px);
+  transform: rotate(45deg);
+  background: rgba(180, 140, 80, 0.05);
+}
+
+/* Film Sprocket Holes (decorative) */
+.album-card__sprockets {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 3;
+}
+
+.album-card__sprocket {
+  width: 4px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 1px;
+}
+
+.album-card__sprockets--right {
+  left: auto;
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .album-card__header {
+    padding: 2rem 2rem 1.5rem;
+  }
+
+  .album-card__header::after {
+    left: 2rem;
+    right: 2rem;
+  }
+
+  .album-card__title {
+    font-size: 1.8rem;
+  }
+
+  .album-card__media {
+    margin: 0 2rem;
+  }
+
+  .album-card__footer {
+    padding: 1.2rem 2rem 2rem;
+  }
 }
