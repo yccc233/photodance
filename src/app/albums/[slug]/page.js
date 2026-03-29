@@ -8,7 +8,8 @@ export async function generateStaticParams() {
 }
 
 export default async function AlbumPage({ params }) {
-  const album = albums.find((a) => a.slug === params.slug);
+  const { slug } = await params;
+  const album = albums.find((a) => a.slug === slug);
 
   if (!album) {
     return <div>Album not found</div>;

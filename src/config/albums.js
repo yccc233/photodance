@@ -1,10 +1,10 @@
 export const albums = [
   {
-    slug: "travel",
-    title: "旅行",
+    slug: "lianyungang",
+    title: "连云港",
     description: "2024年的旅行记录",
     layout: "masonry",
-    cover: "/photos/travel/cover.jpg",
-    photosFolder: "/photos/travel"
+    cover: "/photos/lianyungang/DSC08607.JPG",
+    photosFolder: "/photos/lianyungang"
   }
 ];
