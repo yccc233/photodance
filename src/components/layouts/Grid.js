@@ -1,14 +1,15 @@
-export default function Grid({ photos }) {
+import "../../app/albums.css";
+
+export default function Grid({ photos, onPhotoClick }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid">
       {photos.map((photo, index) => (
-        <div key={index} className="aspect-square">
-          <img
-            src={photo}
-            alt=""
-            className="w-full h-full object-cover rounded-lg"
-            loading="lazy"
-          />
+        <div
+          key={index}
+          className="grid__item"
+          onClick={() => onPhotoClick && onPhotoClick(index)}
+        >
+          <img src={photo} alt="" loading="lazy" />
         </div>
       ))}
     </div>
