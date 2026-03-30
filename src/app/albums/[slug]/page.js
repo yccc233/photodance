@@ -3,7 +3,7 @@ import AlbumHeader from "@/components/AlbumHeader";
 import AlbumInfoSection from "@/components/AlbumInfoSection";
 import AlbumPageClient from "@/components/AlbumPageClient";
 import { getPhotosFromFolder } from "@/lib/photos";
-import "../../app/albums.css";
+import "../../albums.css";
 
 export async function generateStaticParams() {
   return albums.map((album) => ({ slug: album.slug }));
