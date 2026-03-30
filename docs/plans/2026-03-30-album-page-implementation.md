@@ -4,9 +4,9 @@
 
 **Goal:** 对相册详情页进行视觉升级，延续首页电影胶片风格，融合报纸/杂志风排版，新增全屏灯箱。
 
-**Architecture:** 相册页沿用现有 `PhotoWall` 路由模式不变，分别重构 Masonry / Grid / Timeline 三套布局样式。新增客户端 `PhotoLightbox.js` 组件处理灯箱交互，顶部导航抽离为 `AlbumHeader.js`。
+**Architecture:** 相册页沿用现有 `PhotoWall` 路由模式不变。新增顶部信息区 `AlbumInfoSection`、顶部导航 `AlbumHeader`、客户端灯箱 `PhotoLightbox`，分别重构 Masonry / Grid / Timeline 三套布局样式。
 
-**Tech Stack:** Next.js 16（App Router），React 19，Tailwind CSS v4，CSS Modules（`albums.css`），无额外第三方库。
+**Tech Stack:** Next.js 16（App Router），React 19，Tailwind CSS v4，`albums.css`，无额外第三方库。
 
 ---
 
@@ -14,18 +14,119 @@
 
 | # | 任务 | 文件 |
 |---|------|------|
-| 1 | 创建 `AlbumHeader.js` 顶部导航栏 | `src/components/AlbumHeader.js` |
-| 2 | 创建 `PhotoLightbox.js` 灯箱组件 | `src/components/PhotoLightbox.js` |
-| 3 | 重构 Masonry 布局（胶片齿孔） | `src/components/layouts/Masonry.js` + `albums.css` |
-| 4 | 重构 Grid 布局（自由高度网格） | `src/components/layouts/Grid.js` + `albums.css` |
-| 5 | 重构 Timeline 布局（呼应首页） | `src/components/layouts/Timeline.js` + `albums.css` |
-| 6 | 重构相册详情页（整合所有组件） | `src/app/albums/[slug]/page.js` |
-| 7 | 添加角落框架装饰（CSS） | `albums.css` |
-| 8 | 验证 & 提交 | — |
+| 1 | 创建 `AlbumInfoSection.js` 顶部信息区 | `src/components/AlbumInfoSection.js` + `albums.css` |
+| 2 | 创建 `AlbumHeader.js` 顶部导航栏 | `src/components/AlbumHeader.js` + `albums.css` |
+| 3 | 创建 `PhotoLightbox.js` 灯箱组件 | `src/components/PhotoLightbox.js` + `albums.css` |
+| 4 | 重构 Masonry 布局（胶片齿孔） | `src/components/layouts/Masonry.js` + `albums.css` |
+| 5 | 重构 Grid 布局（自由高度网格） | `src/components/layouts/Grid.js` + `albums.css` |
+| 6 | 重构 Timeline 布局（呼应首页） | `src/components/layouts/Timeline.js` + `albums.css` |
+| 7 | 重构相册详情页（整合所有组件） | `src/app/albums/[slug]/page.js` |
+| 8 | PhotoWall 透传灯箱点击事件 | `src/components/PhotoWall.js` |
+| 9 | 验证 & 提交 | — |
 
 ---
 
-## 任务 1：创建顶部导航栏 AlbumHeader
+## 任务 1：创建顶部信息区 AlbumInfoSection
+
+**文件：** 创建 `src/components/AlbumInfoSection.js`
+
+```jsx
+export default function AlbumInfoSection({ title, description }) {
+  return (
+    <section className="album-info">
+      <h2 className="album-info__title">
+        <span className="album-info__star">✦</span>
+        {" "}{title}{" "}
+        <span className="album-info__star">✦</span>
+      </h2>
+      <p className="album-info__desc">{description}</p>
+      <div className="album-info__divider">
+        <span className="album-info__line" />
+        <span className="album-info__diamond">◆</span>
+        <span className="album-info__line" />
+      </div>
+    </section>
+  );
+}
+```
+
+对应的 CSS 片段追加到 `albums.css`：
+
+```css
+.album-info {
+  text-align: center;
+  padding: 3rem 2rem 2.5rem;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.album-info__title {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #b48c50;
+  margin: 0 0 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.album-info__star {
+  font-size: 0.6em;
+  vertical-align: middle;
+}
+
+.album-info__desc {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #888;
+  margin: 0;
+}
+
+.album-info__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+  animation: expandLine 0.6s ease-out 0.3s both;
+}
+
+.album-info__line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(180, 140, 80, 0.6), transparent);
+}
+
+.album-info__diamond {
+  color: #b48c50;
+  font-size: 0.6rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes expandLine {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+@media (max-width: 640px) {
+  .album-info {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  .album-info__title {
+    font-size: 1.8rem;
+  }
+  .album-info__line {
+    width: 40px;
+  }
+}
+```
+
+---
+
+## 任务 3：创建顶部导航栏 AlbumHeader
 
 **文件：** 创建 `src/components/AlbumHeader.js`
 
@@ -779,7 +880,7 @@ export default async function AlbumPage({ params, searchParams }) {
 
 ---
 
-## 任务 8：PhotoWall 透传灯箱点击事件
+## 任务 9：PhotoWall 透传灯箱点击事件
 
 **文件：** 修改 `src/components/PhotoWall.js`
 
@@ -809,7 +910,7 @@ export default function PhotoWall({ photos, layout, onPhotoClick }) {
 
 ---
 
-## 任务 9：验证 & 提交
+## 任务 10：验证 & 提交
 
 1. 运行 `npm run dev`，访问各相册页面验证三种布局
 2. 点击照片打开灯箱，测试左右切换、ESC 关闭、缩略图点击
