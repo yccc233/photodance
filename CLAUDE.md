@@ -1,8 +1,14 @@
-@AGENTS.md
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## ⚠️ Critical: Next.js 16 with Breaking Changes
+
+This project uses **Next.js 16.2.1 and React 19** — these versions have breaking changes from earlier releases. APIs, conventions, and file structure may differ from familiar patterns. Read `node_modules/next/dist/docs/` before writing code. Heed deprecation notices.
 
 ## Project Overview
 
-PhotoDance is a photo gallery website built with Next.js 16.2.1 and React 19, using Tailwind CSS v4. It displays photo albums with multiple layout options (masonry, grid, timeline).
+PhotoDance is a photo gallery website that displays photo albums with multiple layout options (masonry, grid, timeline).
 
 ## Commands
 
@@ -13,28 +19,36 @@ npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
 
+**Note:** No test framework is configured (no test script in package.json).
+
 ## Architecture
 
+### Data Flow
+1. **Album config** (`src/config/albums.js`) — defines all albums with slug, title, layout type, cover photo, and photos folder
+2. **Photo reading** (`src/lib/photos.js`) — reads photos from `public/photos/{folder}` at build time via `getPhotosFromFolder()`
+3. **Static generation** — `generateStaticParams` in album page creates static routes for each album
+
 ### Pages
-- **`src/app/page.js`** - Home page displaying album cards with cinematic animations (stars, meteors, corner frames)
-- **`src/app/albums/[slug]/page.js`** - Album detail page with `generateStaticParams` for static generation
+- **`src/app/page.js`** — Home page with cinematic animations (stars, meteors, corner frames)
+- **`src/app/albums/[slug]/page.js`** — Album detail page with `generateStaticParams`
+
+### Layout Router Pattern
+**`src/components/PhotoWall.js`** — Route component that renders the appropriate layout based on album config:
+- `masonry` → `src/components/layouts/Masonry.js`
+- `grid` → `src/components/layouts/Grid.js`
+- `timeline` → `src/components/layouts/Timeline.js`
 
 ### Components
-- **`src/components/PhotoWall.js`** - Router component that renders layout based on album config (masonry/grid/timeline)
-- **`src/components/layouts/`** - Layout implementations: `Masonry.js`, `Grid.js`, `Timeline.js`
-- **`src/components/AlbumCard.js`** - Album card with hover animations (client component)
+- **`AlbumCard.js`** — Client component (`"use client"`) with hover animations
+- **`ScrollReveal.js`** — Animation wrapper component
 
-### Data Flow
-1. Albums are configured in **`src/config/albums.js`** with slug, title, description, layout type, cover photo, and photos folder
-2. **`src/lib/photos.js`** reads photos from `public/photos/{folder}` at build time
-3. Static params are generated via `generateStaticParams` in the album page
+## Styling
+- **Tailwind CSS v4** (via `@tailwindcss/postcss`)
+- **Custom CSS** — `src/app/home.css` contains elaborate home page animations
+- **Google Fonts** — Playfair Display and Lora via `next/font/google`
 
-### Styling
-- **Tailwind CSS v4** (via `@tailwindcss/postcss`) - utility-first CSS
-- **Custom CSS** - `src/app/home.css` contains elaborate animations (stars, meteors, corner frames)
-- **Google Fonts** - Playfair Display and Lora via `next/font/google`
+## Adding a New Album
 
-### Key Responsive Considerations
-- Home page uses `clamp()` for fluid typography and Tailwind responsive prefixes (`md:`, `lg:`)
-- Corner frames in home.css use fixed positioning (`30px`, `55px`) - may need mobile-specific adjustments
-- Masonry columns: `columns-2 md:columns-3 lg:columns-4`
+1. Add entry to `src/config/albums.js` with slug, title, description, layout, cover, and photosFolder
+2. Add photos to `public/photos/{folder}` — `getPhotosFromFolder()` auto-discovers them at build time
+3. Static params are auto-generated — no manual route config needed

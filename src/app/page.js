@@ -1,6 +1,7 @@
 import { albums } from "@/config/albums";
 import AlbumCard from "@/components/AlbumCard";
 import ScrollReveal from "@/components/ScrollReveal";
+import Countdown from "@/components/Countdown";
 import { Playfair_Display, Lora } from "next/font/google";
 import "./home.css";
 
@@ -48,6 +49,13 @@ export default function Home() {
       <StarsBackground />
 
       <div className="home__frame">
+        <div className="home__meteor" />
+        <div className="home__meteor" />
+        <div className="home__meteor" />
+        <div className="home__meteor" />
+        <div className="home__meteor" />
+        <div className="home__meteor" />
+        <div className="home__meteor" />
         <div className="home__meteor" />
         <div className="home__meteor" />
         <div className="home__meteor" />
@@ -112,6 +120,10 @@ export default function Home() {
 
       <footer className="home__footer">
         <p>每一张照片都是一个故事</p>
+        <p className="home__credit">俞澄❤张昕</p>
+        <div className="home__countdown">
+          <Countdown />
+        </div>
       </footer>
     </div>
   );

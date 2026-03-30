@@ -13,6 +13,7 @@
   transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               box-shadow 0.5s ease;
   cursor: pointer;
+  max-width: 480px;
 }
 
 .album-card:hover {
@@ -117,37 +118,37 @@
 /* Film Frame Corners */
 .album-card__frame {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   z-index: 3;
   pointer-events: none;
 }
 
 .album-card__frame--tl {
-  top: 8px;
-  left: 8px;
+  top: 12px;
+  left: 12px;
   border-right: none;
   border-bottom: none;
 }
 
 .album-card__frame--tr {
-  top: 8px;
-  right: 8px;
+  top: 12px;
+  right: 12px;
   border-left: none;
   border-bottom: none;
 }
 
 .album-card__frame--bl {
-  bottom: 8px;
-  left: 8px;
+  bottom: 12px;
+  left: 12px;
   border-right: none;
   border-top: none;
 }
 
 .album-card__frame--br {
-  bottom: 8px;
-  right: 8px;
+  bottom: 12px;
+  right: 12px;
   border-left: none;
   border-top: none;
 }

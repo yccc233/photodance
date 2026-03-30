@@ -22,7 +22,7 @@ export const albums = [
     title: "苏州",
     description: "江南水乡的风情",
     layout: "grid",
-    cover: "/photos/suzhou/DSC08319.JPG",
+    cover: "/photos/suzhou/DSC08409.JPG",
     photosFolder: "/photos/suzhou",
     date: "2024.08"
   },
@@ -31,7 +31,7 @@ export const albums = [
     title: "时光印记",
     description: "按时间排序的回忆",
     layout: "timeline",
-    cover: "/photos/timeline-album/DSC08459.png",
+    cover: "/photos/timeline-album/DSC08493.JPG",
     photosFolder: "/photos/timeline-album",
     date: "2024.10"
   },
