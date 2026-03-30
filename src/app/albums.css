@@ -1,0 +1,69 @@
+.album-info {
+  text-align: center;
+  padding: 3rem 2rem 2.5rem;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.album-info__title {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #b48c50;
+  margin: 0 0 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.album-info__star {
+  font-size: 0.6em;
+  vertical-align: middle;
+}
+
+.album-info__desc {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #888;
+  margin: 0;
+}
+
+.album-info__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+  animation: expandLine 0.6s ease-out 0.3s both;
+}
+
+.album-info__line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(180, 140, 80, 0.6), transparent);
+}
+
+.album-info__diamond {
+  color: #b48c50;
+  font-size: 0.6rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes expandLine {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+@media (max-width: 640px) {
+  .album-info {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  .album-info__title {
+    font-size: 1.8rem;
+  }
+  .album-info__line {
+    width: 40px;
+  }
+}
