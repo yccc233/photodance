@@ -488,3 +488,62 @@
     flex: 1;
   }
 }
+
+.album-page {
+  min-height: 100vh;
+  background: #faf9f7;
+  position: relative;
+}
+
+.album-page__corner {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.album-page__corner::before,
+.album-page__corner::after {
+  content: "";
+  position: absolute;
+  background: #1a1a1a;
+}
+
+.album-page__corner--tl { top: 20px; left: 20px; }
+.album-page__corner--tl::before { top: 0; left: 0; width: 50px; height: 2px; }
+.album-page__corner--tl::after { top: 0; left: 0; width: 2px; height: 50px; }
+
+.album-page__corner--tr { top: 20px; right: 20px; }
+.album-page__corner--tr::before { top: 0; right: 0; width: 50px; height: 2px; }
+.album-page__corner--tr::after { top: 0; right: 0; width: 2px; height: 50px; }
+
+@media (min-width: 768px) {
+  .album-page__corner--tl { top: 30px; left: 30px; }
+  .album-page__corner--tl::before { width: 80px; height: 2px; }
+  .album-page__corner--tl::after { height: 80px; width: 2px; }
+  .album-page__corner--tr { top: 30px; right: 30px; }
+  .album-page__corner--tr::before { width: 80px; height: 2px; }
+  .album-page__corner--tr::after { height: 80px; width: 2px; }
+}
+
+.album-page__content {
+  position: relative;
+  z-index: 10;
+}
+
+.album-page__footer {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #b48c50;
+  letter-spacing: 0.3em;
+  position: relative;
+  z-index: 10;
+}
+
+.album-page__footer p {
+  margin: 0;
+}

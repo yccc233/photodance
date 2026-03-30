@@ -1,7 +1,9 @@
 import { albums } from "@/config/albums";
-import PhotoWall from "@/components/PhotoWall";
-import Link from "next/link";
+import AlbumHeader from "@/components/AlbumHeader";
+import AlbumInfoSection from "@/components/AlbumInfoSection";
+import AlbumPageClient from "@/components/AlbumPageClient";
 import { getPhotosFromFolder } from "@/lib/photos";
+import "../../app/albums.css";
 
 export async function generateStaticParams() {
   return albums.map((album) => ({ slug: album.slug }));
@@ -18,13 +20,17 @@ export default async function AlbumPage({ params }) {
   const photos = await getPhotosFromFolder(album.photosFolder);
 
   return (
-    <div className="min-h-screen p-8 max-w-6xl mx-auto">
-      <Link href="/" className="text-blue-500 hover:underline mb-8 inline-block">
-        ← 返回
-      </Link>
-      <h1 className="text-3xl font-bold mb-2">{album.title}</h1>
-      <p className="text-gray-600 mb-8">{album.description}</p>
-      <PhotoWall photos={photos} layout={album.layout} />
+    <div className="album-page">
+      <div className="album-page__corner album-page__corner--tl" />
+      <div className="album-page__corner album-page__corner--tr" />
+      <AlbumHeader title={album.title} layout={album.layout} />
+      <main className="album-page__content">
+        <AlbumInfoSection title={album.title} description={album.description} />
+        <AlbumPageClient photos={photos} layout={album.layout} />
+      </main>
+      <footer className="album-page__footer">
+        <p>俞澄❤张昕</p>
+      </footer>
     </div>
   );
 }
