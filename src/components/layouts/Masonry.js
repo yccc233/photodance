@@ -1,14 +1,22 @@
-export default function Masonry({ photos }) {
+import "../../app/albums.css";
+
+export default function Masonry({ photos, onPhotoClick }) {
   return (
-    <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+    <div className="masonry">
       {photos.map((photo, index) => (
-        <div key={index} className="break-inside-avoid">
-          <img
-            src={photo}
-            alt=""
-            className="w-full rounded-lg"
-            loading="lazy"
-          />
+        <div
+          key={index}
+          className="masonry__item"
+          onClick={() => onPhotoClick && onPhotoClick(index)}
+        >
+          <div className="masonry__sprocket">
+            <div className="masonry__sprocket-hole" />
+            <div className="masonry__sprocket-hole" />
+            <div className="masonry__sprocket-hole" />
+          </div>
+          <div className="masonry__photo">
+            <img src={photo} alt="" loading="lazy" />
+          </div>
         </div>
       ))}
     </div>
