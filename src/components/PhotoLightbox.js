@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useCallback, useState } from "react";
+import Image from "next/image";
 
 export default function PhotoLightbox({ photos, initialIndex, onClose }) {
   const [current, setCurrent] = useState(initialIndex);
   const [visible, setVisible] = useState(false);
+
+  const getSrc = (photo) => (typeof photo === "string" ? photo : (photo.src || photo));
+  const getThumb = (photo) => (typeof photo === "string" ? photo : (photo.thumb || photo.src || photo));
 
   useEffect(() => {
     requestAnimationFrame(() => setVisible(true));
@@ -46,6 +50,10 @@ export default function PhotoLightbox({ photos, initialIndex, onClose }) {
   const thumbs = photos.slice(start, end + 1);
   const thumbsStart = start;
 
+  const currentPhoto = photos[current];
+  const fullSrc = getSrc(currentPhoto);
+  const blurDataURL = typeof currentPhoto === "object" ? currentPhoto.blurDataURL : undefined;
+
   return (
     <div className={`lightbox ${visible ? "lightbox--visible" : ""}`} onClick={onClose}>
       {/* Top bar */}
@@ -58,24 +66,45 @@ export default function PhotoLightbox({ photos, initialIndex, onClose }) {
 
       {/* Main photo */}
       <div className="lightbox__photo-wrap" onClick={(e) => e.stopPropagation()}>
-        <img src={photos[current]} alt="" className="lightbox__photo" />
+        <Image
+          src={fullSrc}
+          alt=""
+          width={typeof currentPhoto === "object" && currentPhoto.width ? currentPhoto.width : 1920}
+          height={typeof currentPhoto === "object" && currentPhoto.height ? currentPhoto.height : 1080}
+          className="lightbox__photo"
+          style={{ objectFit: "contain" }}
+          priority={current === initialIndex}
+          placeholder={blurDataURL ? "blur" : "empty"}
+          blurDataURL={blurDataURL}
+        />
       </div>
 
       {/* Navigation arrows */}
       <button className="lightbox__arrow lightbox__arrow--prev" onClick={(e) => { e.stopPropagation(); prev(); }}>‹</button>
       <button className="lightbox__arrow lightbox__arrow--next" onClick={(e) => { e.stopPropagation(); next(); }}>›</button>
 
-      {/* Thumbnail strip */}
+      {/* Thumbnail strip - uses thumbs */}
       <div className="lightbox__thumbs" onClick={(e) => e.stopPropagation()}>
-        {thumbs.map((photo, i) => (
-          <button
-            key={photo}
-            className={`lightbox__thumb ${photo === photos[current] ? "lightbox__thumb--active" : ""}`}
-            onClick={() => setCurrent(thumbsStart + i)}
-          >
-            <img src={photo} alt="" />
-          </button>
-        ))}
+        {thumbs.map((photo, i) => {
+          const thumbSrc = getThumb(photo);
+          const isActive = photo === currentPhoto || (typeof photo === "object" && typeof currentPhoto === "object" && photo.src === currentPhoto.src);
+
+          return (
+            <button
+              key={thumbSrc}
+              className={`lightbox__thumb ${isActive ? "lightbox__thumb--active" : ""}`}
+              onClick={() => setCurrent(thumbsStart + i)}
+            >
+              <Image
+                src={thumbSrc}
+                alt=""
+                width={56}
+                height={40}
+                style={{ objectFit: "cover" }}
+              />
+            </button>
+          );
+        })}
       </div>
     </div>
   );

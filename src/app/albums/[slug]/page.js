@@ -21,8 +21,6 @@ export default async function AlbumPage({ params }) {
 
   return (
     <div className="album-page">
-      <div className="album-page__corner album-page__corner--tl" />
-      <div className="album-page__corner album-page__corner--tr" />
       <AlbumHeader title={album.title} layout={album.layout} />
       <main className="album-page__content">
         <AlbumInfoSection title={album.title} description={album.description} />

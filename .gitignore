@@ -48,3 +48,10 @@ next-env.d.ts
 .playwright-mcp
 .idea
 
+# 生成的缩略图和清单
+public/photos/*/.thumbs/
+public/photos/*/manifest.json
+
+# 本地脚本
+scripts/
+
