@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/generate-thumbs.mjs && next build",
+    "build": "next build",
     "thumbs": "node scripts/generate-thumbs.mjs",
     "start": "next start",
     "lint": "eslint"

@@ -49,3 +49,34 @@ export async function getPhotosFromFolder(photosFolder) {
     return [];
   }
 }
+
+export async function getAlbumCoverThumb(album) {
+  const relativePath = album.photosFolder.replace(/^\//, "");
+  const fullPath = path.join(process.cwd(), "public", relativePath);
+
+  try {
+    const manifestPath = path.join(fullPath, "manifest.json");
+    const manifestData = await fs.readFile(manifestPath, "utf8");
+    const manifest = JSON.parse(manifestData);
+
+    const coverFileName = path.basename(album.cover);
+    const coverMeta = manifest.photos.find((p) => p.name === coverFileName);
+
+    if (coverMeta) {
+      return `/${relativePath}/${coverMeta.thumb}`;
+    }
+  } catch {
+    // No manifest
+  }
+
+  return album.cover;
+}
+
+export async function getAlbumsWithCoverThumbs(albums) {
+  return Promise.all(
+    albums.map(async (album) => ({
+      ...album,
+      coverThumb: await getAlbumCoverThumb(album),
+    }))
+  );
+}

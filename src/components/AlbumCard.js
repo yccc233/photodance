@@ -24,7 +24,7 @@ export default function AlbumCard({ album, index = 0 }) {
           <div className="album-card__frame album-card__frame--bl" />
           <div className="album-card__frame album-card__frame--br" />
           <img
-            src={album.cover}
+            src={album.coverThumb || album.cover}
             alt={album.title}
             className="album-card__image"
           />

@@ -1,4 +1,5 @@
 import { albums } from "@/config/albums";
+import { getAlbumsWithCoverThumbs } from "@/lib/photos";
 import AlbumCard from "@/components/AlbumCard";
 import ScrollReveal from "@/components/ScrollReveal";
 import Countdown from "@/components/Countdown";
@@ -42,7 +43,9 @@ function StarsBackground() {
   return <div className="home__stars">{stars}</div>;
 }
 
-export default function Home() {
+export default async function Home() {
+  const albumsWithThumbs = await getAlbumsWithCoverThumbs(albums);
+
   return (
     <div className={`home ${playfair.variable} ${lora.variable}`}>
       <div className="home__bg-grain" />
@@ -83,11 +86,11 @@ export default function Home() {
       <main className="home__gallery">
         <ScrollReveal className="home__gallery-header">
           <span className="home__gallery-label">映像</span>
-          <span className="home__gallery-count">{albums.length} Collections</span>
+          <span className="home__gallery-count">{albumsWithThumbs.length} Collections</span>
         </ScrollReveal>
         <div className="home__timeline">
           <div className="home__timeline-line" />
-          {albums.map((album, index) => (
+          {albumsWithThumbs.map((album, index) => (
             <div key={album.slug} className="home__timeline-item">
               <div className="home__timeline-node">
                 <div className="home__timeline-dot" />
@@ -103,7 +106,7 @@ export default function Home() {
               <div className="home__timeline-dot home__timeline-dot--future" />
               <span className="home__timeline-date home__timeline-date--future">????.??</span>
             </div>
-            <ScrollReveal delay={albums.length * 150}>
+            <ScrollReveal delay={albumsWithThumbs.length * 150}>
               <div className="album-card album-card--future">
                 <div className="album-card__future-content">
                   <div className="album-card__header">
