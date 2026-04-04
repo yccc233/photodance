@@ -75,14 +75,32 @@ function FlipCard({ value, label }) {
 }
 
 export default function Countdown() {
-  const [time, setTime] = useState(getTimeLeft());
+  const [time, setTime] = useState(null);
 
   useEffect(() => {
+    setTime(getTimeLeft());
     const timer = setInterval(() => {
       setTime(getTimeLeft());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  if (!time) {
+    return (
+      <div className="fc">
+        <div className="fc__label">Wedding Countdown</div>
+        <div className="fc__timer">
+          <FlipCard value="--" label="Days" />
+          <span className="fc__sep">:</span>
+          <FlipCard value="--" label="Hours" />
+          <span className="fc__sep">:</span>
+          <FlipCard value="--" label="Min" />
+          <span className="fc__sep">:</span>
+          <FlipCard value="--" label="Sec" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fc">

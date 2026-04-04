@@ -12,7 +12,7 @@ export async function getPhotosFromFolder(photosFolder) {
     const photos = files
       .filter((file) => {
         const ext = path.extname(file).toLowerCase();
-        return supportedExtensions.includes(ext);
+        return supportedExtensions.includes(ext) && !file.startsWith('.thumbs');
       })
       .map((file) => `/${relativePath}/${file}`);
 
