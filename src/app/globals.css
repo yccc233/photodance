@@ -3,3 +3,56 @@
 body {
   @apply bg-zinc-50;
 }
+
+/* Heart Magic Effect */
+.heart-magic-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  animation: heartFloat 1.5s ease-out forwards;
+  line-height: 1;
+}
+
+.heart-magic-heart svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.3) rotate(0deg);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1) rotate(-5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.5) rotate(5deg);
+  }
+}
+
+.heart-magic-sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  border-radius: 50%;
+  animation: sparkleFloat 1s ease-out forwards;
+}
+
+@keyframes sparkleFloat {
+  0% {
+    opacity: 1;
+    transform: scale(0) translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1) translateY(-5px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) translateY(-15px);
+  }
+}

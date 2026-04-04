@@ -1,4 +1,5 @@
 import "./globals.css";
+import HeartMagic from "@/components/HeartMagic";
 
 export const metadata = {
   title: "PhotoDance",
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="zh-CN">
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        <HeartMagic />
+      </body>
     </html>
   );
 }
