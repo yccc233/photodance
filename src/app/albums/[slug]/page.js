@@ -1,7 +1,7 @@
 import { albums } from "@/config/albums";
-import AlbumHeader from "@/components/AlbumHeader";
 import AlbumInfoSection from "@/components/AlbumInfoSection";
 import AlbumPageClient from "@/components/AlbumPageClient";
+import ScrollProgress from "@/components/ScrollProgress";
 import { getPhotosFromFolder } from "@/lib/photos";
 import "../../albums.css";
 
@@ -21,11 +21,7 @@ export default async function AlbumPage({ params }) {
 
   return (
     <div className="album-page">
-      <AlbumHeader title={album.title} layout={album.layout} />
-      <main className="album-page__content">
-        <AlbumInfoSection title={album.title} description={album.description} />
-        <AlbumPageClient photos={photos} layout={album.layout} />
-      </main>
+      <AlbumPageClient photos={photos} layout={album.layout} albumTitle={album.title} albumDescription={album.description} photoCount={photos.length} />
       <footer className="album-page__footer">
         <p>俞澄❤张昕</p>
       </footer>

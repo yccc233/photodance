@@ -16,22 +16,15 @@ export default function Masonry({ photos, onPhotoClick }) {
             className="masonry__item"
             onClick={() => onPhotoClick && onPhotoClick(index)}
           >
-            <div className="masonry__sprocket">
-              <div className="masonry__sprocket-hole" />
-              <div className="masonry__sprocket-hole" />
-              <div className="masonry__sprocket-hole" />
-            </div>
-            <div className="masonry__photo">
-              <Image
-                src={src}
-                alt=""
-                width={width || 400}
-                height={height || 300}
-                style={{ objectFit: "cover" }}
-                placeholder={blurDataURL ? "blur" : "empty"}
-                blurDataURL={blurDataURL}
-              />
-            </div>
+            <Image
+              src={src}
+              alt=""
+              width={width || 400}
+              height={height || 300}
+              className="masonry__photo"
+              placeholder={blurDataURL ? "blur" : "empty"}
+              blurDataURL={blurDataURL}
+            />
           </div>
         );
       })}
