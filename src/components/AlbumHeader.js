@@ -10,13 +10,20 @@ function BackIcon() {
   );
 }
 
-export default function AlbumHeader({ title }) {
+export default function AlbumHeader({ title, onBack }) {
   return (
     <header className="album-header">
-      <Link href="/" className="album-header__back">
-        <BackIcon />
-        <span>返回</span>
-      </Link>
+      {onBack ? (
+        <button onClick={onBack} className="album-header__back">
+          <BackIcon />
+          <span>返回</span>
+        </button>
+      ) : (
+        <Link href="/" className="album-header__back">
+          <BackIcon />
+          <span>返回</span>
+        </Link>
+      )}
       <h1 className="album-header__title">{title}</h1>
       <div className="album-header__actions" />
     </header>

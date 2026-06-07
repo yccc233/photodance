@@ -6,11 +6,12 @@ export const metadata = {
   description: "我的照片墙",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, modal }) {
   return (
     <html lang="zh-CN">
       <body className="font-sans antialiased">
         {children}
+        {modal}
         <HeartMagic />
       </body>
     </html>

@@ -1,14 +1,38 @@
-export default function AlbumInfoSection({ title, description, photoCount }) {
+import Image from "next/image";
+
+export default function AlbumInfoSection({ title, description, photoCount, cover, date, heroPosition, heroScale }) {
+  const imgStyle = {
+    objectFit: "cover",
+    objectPosition: heroPosition || "center",
+  };
+  if (heroScale) {
+    imgStyle.transform = `scale(${heroScale})`;
+  }
+
   return (
-    <section className="album-info">
-      <p className="album-info__subtitle">{description}</p>
-      <div className="album-info__divider">
-        <span className="album-info__line" />
-        <span className="album-info__dot">•</span>
-        <span className="album-info__line" />
+    <section className="album-hero">
+      <div className="album-hero__image-wrap">
+        <Image
+          src={cover}
+          alt=""
+          fill
+          className="album-hero__image"
+          priority
+          sizes="100vw"
+          style={imgStyle}
+        />
+        <div className="album-hero__overlay" />
       </div>
-      <div className="album-info__count">
-        <span className="album-info__count-num">{photoCount}</span> 张照片
+      <div className="album-hero__content">
+        <p className="album-hero__date">{date}</p>
+        <h1 className="album-hero__title">{title}</h1>
+        <div className="album-hero__divider">
+          <span className="album-hero__line" />
+          <span className="album-hero__dot" />
+          <span className="album-hero__line" />
+        </div>
+        <p className="album-hero__desc">{description}</p>
+        <p className="album-hero__count">{photoCount} 张照片</p>
       </div>
     </section>
   );

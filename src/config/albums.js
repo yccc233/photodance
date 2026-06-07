@@ -27,6 +27,7 @@ export const LAYOUT_TYPES = {
  * @property {string}   cover         - 封面图路径，相册列表页使用
  * @property {string}   photosFolder  - 照片文件夹路径，相对于 public/photos
  * @property {string}   date          - 日期，格式如 "2024.03"
+ * @property {string}   [heroPosition] - hero图object-position，默认"center"；如"center 20%"让图片上移
  */
 
 export const albums = [
@@ -45,6 +46,8 @@ export const albums = [
     description: "高原上的天空与信仰",
     layout: LAYOUT_TYPES.MASONRY,
     cover: "/photos/xizang/psc.jpg",
+    heroPosition: "60% 25%",
+    heroScale: 1.3,
     photosFolder: "/photos/xizang",
     date: "2023.10"
   },

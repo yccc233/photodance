@@ -21,7 +21,8 @@ export default async function AlbumPage({ params }) {
 
   return (
     <div className="album-page">
-      <AlbumPageClient photos={photos} layout={album.layout} albumTitle={album.title} albumDescription={album.description} photoCount={photos.length} />
+      <div className="album-page__bg-grain" />
+      <AlbumPageClient photos={photos} layout={album.layout} albumTitle={album.title} albumDescription={album.description} photoCount={photos.length} albumCover={album.cover} albumDate={album.date} heroPosition={album.heroPosition} heroScale={album.heroScale} />
       <footer className="album-page__footer">
         <p>俞澄❤张昕</p>
       </footer>
