@@ -9,3 +9,13 @@
 
 
 参考设计：https://codepen.io/mican/pen/awxmp照片
+
+
+现在的照片都是测试用的，帮我把这些照片新建一个demo目录，都移进去
+
+
+我放了一些真实照片，还需要哪些信息？
+shenghuozhao，生活照，2022.9.4
+xizang，西藏，2023.10.1
+lianyungang，连云港，2025.7.19
+xinjiang，新疆，2025.10.1

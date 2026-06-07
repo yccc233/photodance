@@ -31,48 +31,39 @@ export const LAYOUT_TYPES = {
 
 export const albums = [
   {
+    slug: "shenghuozhao",
+    title: "生活照",
+    description: "日常生活的温暖瞬间",
+    layout: LAYOUT_TYPES.MASONRY,
+    cover: "/photos/shenghuozhao/IMG_0436.JPEG",
+    photosFolder: "/photos/shenghuozhao",
+    date: "2022.09"
+  },
+  {
+    slug: "xizang",
+    title: "西藏",
+    description: "高原上的天空与信仰",
+    layout: LAYOUT_TYPES.MASONRY,
+    cover: "/photos/xizang/psc.jpg",
+    photosFolder: "/photos/xizang",
+    date: "2023.10"
+  },
+  {
     slug: "lianyungang",
     title: "连云港",
-    description: "2024年的旅行记录",
+    description: "2025年夏，海边的风",
     layout: LAYOUT_TYPES.MASONRY,
-    cover: "/photos/lianyungang/DSC08607.JPG",
+    cover: "/photos/lianyungang/DSC08290.JPG",
     photosFolder: "/photos/lianyungang",
-    date: "2024.03"
+    date: "2025.07"
   },
   {
-    slug: "nanjing",
-    title: "南京",
-    description: "金陵古都的记忆",
+    slug: "xinjiang",
+    title: "新疆",
+    description: "西域的风光与风情",
     layout: LAYOUT_TYPES.MASONRY,
-    cover: "/photos/nanjing/DSC08290.JPG",
-    photosFolder: "/photos/nanjing",
-    date: "2024.05"
-  },
-  {
-    slug: "suzhou",
-    title: "苏州",
-    description: "江南水乡的风情",
-    layout: LAYOUT_TYPES.MASONRY,
-    cover: "/photos/suzhou/DSC08409.JPG",
-    photosFolder: "/photos/suzhou",
-    date: "2024.08"
-  },
-  {
-    slug: "timeline-album",
-    title: "时光印记",
-    description: "按时间排序的回忆",
-    layout: LAYOUT_TYPES.MASONRY,
-    cover: "/photos/timeline-album/DSC08493.JPG",
-    photosFolder: "/photos/timeline-album",
-    date: "2024.10"
-  },
-  {
-    slug: "grid-album",
-    title: "随手拍",
-    description: "日常记录的瞬间",
-    layout: LAYOUT_TYPES.MASONRY,
-    cover: "/photos/grid-album/DSC08581.JPG",
-    photosFolder: "/photos/grid-album",
-    date: "2025.01"
+    cover: "/photos/xinjiang/psc (3).jpg",
+    photosFolder: "/photos/xinjiang",
+    date: "2025.10"
   }
 ];
