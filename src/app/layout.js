@@ -1,5 +1,6 @@
 import "./globals.css";
 import HeartMagic from "@/components/HeartMagic";
+import MusicPlayerWrapper from "@/components/MusicPlayerWrapper";
 
 export const metadata = {
   title: "PhotoDance",
@@ -13,6 +14,7 @@ export default function RootLayout({ children, modal }) {
         {children}
         {modal}
         <HeartMagic />
+        <MusicPlayerWrapper />
       </body>
     </html>
   );
