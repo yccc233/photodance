@@ -46,14 +46,26 @@ export function MusicProvider({ children }) {
       audio.load();
     }
 
-    const wasPlaying = savedPlaying === "true";
-    if (wasPlaying) {
+    // Attempt auto-play; if blocked by browser, wait for first user gesture
+    const tryAutoPlay = () => {
       audio.play().then(() => {
         setIsPlaying(true);
       }).catch(() => {
         setIsPlaying(false);
+        // Browser blocked autoplay — wait for first user interaction
+        const resume = () => {
+          audio.play().then(() => setIsPlaying(true)).catch(() => {});
+          document.removeEventListener("click", resume);
+          document.removeEventListener("touchstart", resume);
+          document.removeEventListener("keydown", resume);
+        };
+        document.addEventListener("click", resume, { once: true });
+        document.addEventListener("touchstart", resume, { once: true });
+        document.addEventListener("keydown", resume, { once: true });
       });
-    }
+    };
+
+    tryAutoPlay();
 
     setReady(true);
 
