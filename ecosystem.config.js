@@ -2,7 +2,7 @@ module.exports = {
   apps: [{
     name: "photodance",
     script: "node_modules/.bin/next",
-    args: "start -p 3000",
+    args: "start -p 80",
     cwd: "./",
     instances: 1,
     exec_mode: "fork",
