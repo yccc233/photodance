@@ -18,13 +18,16 @@ export function MusicProvider({ children }) {
 
   // Init audio element and restore state
   useEffect(() => {
-    const audio = new Audio();
-    audio.volume = 0.5;
-    audio.preload = "auto";
-    audioRef.current = audio;
+    // Reuse audio across Strict Mode double-mount
+    let audio = audioRef.current;
+    if (!audio) {
+      audio = new Audio();
+      audio.volume = 0.5;
+      audio.preload = "auto";
+      audioRef.current = audio;
+    }
 
     const savedTrack = localStorage.getItem(STORAGE_TRACK);
-    const savedPlaying = localStorage.getItem(STORAGE_PLAYING);
     const savedVolume = localStorage.getItem(STORAGE_VOLUME);
 
     let targetIndex = 0;
@@ -51,13 +54,8 @@ export function MusicProvider({ children }) {
       audio.play().then(() => {
         setIsPlaying(true);
       }).catch(() => {
-        setIsPlaying(false);
-        // Browser blocked autoplay — wait for first user interaction
         const resume = () => {
           audio.play().then(() => setIsPlaying(true)).catch(() => {});
-          document.removeEventListener("click", resume);
-          document.removeEventListener("touchstart", resume);
-          document.removeEventListener("keydown", resume);
         };
         document.addEventListener("click", resume, { once: true });
         document.addEventListener("touchstart", resume, { once: true });
@@ -71,7 +69,6 @@ export function MusicProvider({ children }) {
 
     return () => {
       audio.pause();
-      audio.src = "";
     };
   }, []);
 
