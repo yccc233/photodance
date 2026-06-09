@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   cursor: grab;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.6s ease-out;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   user-select: none;
   -webkit-user-select: none;
@@ -61,6 +61,14 @@
 
 .music-btn--playing::after {
   animation-delay: 0.8s;
+}
+
+.music-btn--idle {
+  pointer-events: auto;
+}
+
+.music-btn--idle:hover {
+  opacity: 1 !important;
 }
 
 @keyframes noteFloat {

@@ -8,6 +8,8 @@ const STORAGE_POS = "photodance-player-pos";
 const DRAG_THRESHOLD = 4;
 const SNAP = 50; // px from edge to auto-snap
 const BTN_SIZE = 44;
+const IDLE_TIMEOUT = 5000; // ms before auto-fade
+const IDLE_OPACITY = 0.25; // opacity when idle
 
 function loadPosition() {
   try {
@@ -97,7 +99,9 @@ export default function MusicPlayer() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [posReady, setPosReady] = useState(false);
+  const [idle, setIdle] = useState(false);
   const posLoaded = useRef(false);
+  const idleTimer = useRef(null);
 
   // Load saved position on mount (client-side only)
   useEffect(() => {
@@ -115,6 +119,23 @@ export default function MusicPlayer() {
   const dragRef = useRef({ startX: 0, startY: 0, startRight: 0, startTop: 0, moved: false });
   const posRef = useRef(pos);
   posRef.current = pos;
+
+  // Auto-fade after idle
+  const resetIdleTimer = useCallback(() => {
+    if (idleTimer.current) clearTimeout(idleTimer.current);
+    setIdle(false);
+    idleTimer.current = setTimeout(() => setIdle(true), IDLE_TIMEOUT);
+  }, []);
+
+  useEffect(() => {
+    resetIdleTimer();
+    return () => { if (idleTimer.current) clearTimeout(idleTimer.current); };
+  }, [resetIdleTimer]);
+
+  // Reset timer on interaction
+  useEffect(() => {
+    if (dragging || panelOpen) resetIdleTimer();
+  }, [dragging, panelOpen, resetIdleTimer]);
 
   // Click outside to close
   useEffect(() => {
@@ -201,9 +222,9 @@ export default function MusicPlayer() {
     <>
       <button
         ref={btnRef}
-        className={`music-btn ${dragging ? "music-btn--dragging" : ""} ${isPlaying ? "music-btn--playing" : ""}`}
-        style={{ top: pos.top, right: pos.right }}
-        onPointerDown={handlePointerDown}
+        className={`music-btn ${dragging ? "music-btn--dragging" : ""} ${isPlaying ? "music-btn--playing" : ""} ${idle ? "music-btn--idle" : ""}`}
+        style={{ top: pos.top, right: pos.right, opacity: idle ? IDLE_OPACITY : 1 }}
+        onPointerDown={(e) => { resetIdleTimer(); handlePointerDown(e); }}
         onClick={handleClick}
         aria-label="音乐控制"
       >

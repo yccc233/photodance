@@ -18,6 +18,7 @@ export default function PhotoLightbox({ photos, initialIndex, onClose }) {
   const [visible, setVisible] = useState(false);
   const videoRef = useRef(null);
   const wheelTimer = useRef(null);
+  const touchStartX = useRef(null);
   const touchStartY = useRef(null);
 
   const getSrc = (photo) => (typeof photo === "string" ? photo : (photo.src || photo));
@@ -53,16 +54,20 @@ export default function PhotoLightbox({ photos, initialIndex, onClose }) {
 
     const handleTouchStart = (e) => {
       if (e.target.closest(".lightbox__thumbs") || e.target.closest("video")) return;
+      touchStartX.current = e.touches[0].clientX;
       touchStartY.current = e.touches[0].clientY;
     };
 
     const handleTouchEnd = (e) => {
-      if (touchStartY.current == null) return;
-      const delta = touchStartY.current - e.changedTouches[0].clientY;
-      if (Math.abs(delta) > 50) {
-        if (delta > 0) next();
+      if (touchStartX.current == null) return;
+      const deltaX = touchStartX.current - e.changedTouches[0].clientX;
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+      // Only respond to horizontal swipes (X > Y movement)
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) next();
         else prev();
       }
+      touchStartX.current = null;
       touchStartY.current = null;
     };
 
